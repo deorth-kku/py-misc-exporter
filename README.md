@@ -1,2 +1,2 @@
-# l2m4g
-log all kinds of information to mysql for grafana to show
+# py-misc-explorer
+prometheus explorer for some of my devices written in python
