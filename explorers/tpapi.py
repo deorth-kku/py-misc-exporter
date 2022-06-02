@@ -222,9 +222,13 @@ def main(**config) -> None:
     try:
         result = conn.apipost(data)
     except Exception as e:
-        logging.exception(e)
-        conn = None
-        return
+        if str(e).endswith("-40101"):
+            data["network"]["name"].remove("wanv6_status")
+            result = conn.apipost(data)
+        else:
+            logging.exception(e)
+            conn = None
+            return
     tplink_wan_status_up_time.set(result["network"]["wan_status"]["up_time"])
     tplink_wan_status_down_speed.set(
         result["network"]["wan_status"]["down_speed"])
@@ -233,9 +237,9 @@ def main(**config) -> None:
     tplink_wan_status.info(only_str(result["network"]["wan_status"]))
 
     tplink_wanv6_status_up_time.set(
-        result["network"]["wanv6_status"]["up_time"])
+        result["network"].get("wanv6_status",{}).get("up_time",0))
 
-    tplink_wanv6_status.info(only_str(result["network"]["wanv6_status"]))
+    tplink_wanv6_status.info(only_str(result["network"].get("wanv6_status",{})))
 
     tplink_cap_host_num.set(result["hosts_info"]["cap_host_num"]["host_num"])
     tplink_cap_guest_num.set(result["hosts_info"]["cap_host_num"]["guest_num"])
@@ -263,14 +267,14 @@ def main(**config) -> None:
         tplink_host_info_down_speed.labels(
             ip=info["ip"],
             hostname=unquote(info["hostname"]),
-            ipv6=info["ipv6"],
+            ipv6=info.get("ipv6","::"),
             mac=info["mac"],
             type=device_type
         ).set(info["down_speed"])
         tplink_host_info_up_speed.labels(
             ip=info["ip"],
             hostname=unquote(info["hostname"]),
-            ipv6=info["ipv6"],
+            ipv6=info.get("ipv6","::"),
             mac=info["mac"],
             type=device_type
         ).set(info["up_speed"])
@@ -281,4 +285,13 @@ def main(**config) -> None:
 
 
 if __name__ == "__main__":
-    pass
+    url = "http://%s/" %"tplogin.cn"
+    conn = TPapi(url, "Huawei12#$").apipost({
+        "method": "get",
+        "network": {
+            "name": [
+                "wan_status",
+                "wanv7_status"
+            ]
+        },
+    })

@@ -1,5 +1,4 @@
 #!/bin/python3
-from inspect import trace
 import logging
 from prometheus_client import start_http_server
 import click
