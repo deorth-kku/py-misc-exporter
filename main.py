@@ -1,4 +1,5 @@
 #!/bin/python3
+from inspect import trace
 import logging
 from prometheus_client import start_http_server
 import click
@@ -6,6 +7,7 @@ from utils import my_log_settings,JsonConfig
 import explorers
 import sys
 import time
+from threading import Thread
 
 def install():
     service_file_text="""
@@ -21,19 +23,29 @@ def main(conf,log_file,log_level):
     my_log_settings(log_file,log_level)
     conf=JsonConfig(conf)
     start_http_server(conf.get("explorer",{}).get("port",8900))
+
+    threads=[]
+
     while True:
         for module_name in conf:
             if module_name=="explorer":
                 continue
             try:
                 explorer_main=eval("explorers.%s.main"%module_name)
-                explorer_main(**conf.get(module_name,{}))
+                t=Thread(target=explorer_main,kwargs=conf.get(module_name,{}))
+                t.start()
+                threads.append(t)
             except AttributeError:
                 logging.warning("cannot run main() in module %s, please check if module is correctly written"%module_name)
             except Exception as e:
                 logging.exception(e)
                 return 255
-        time.sleep(conf.get("explorer",{}).get("interval",10))
+        t=Thread(target=time.sleep,args=(conf.get("explorer",{}).get("interval",10),))
+        t.start()
+        threads.append(t)
+
+        for t in threads:
+            t.join()
 
 if __name__ == "__main__":
     sys.exit(main())
