@@ -34,9 +34,10 @@ tplink_wanv6_status = Info("tplink_wanv6_status",
                            "tplink full wan ipv6 status")
 
 tplink_host_info_down_speed = Gauge(
-    'tplink_host_info_down_speed', 'tplink lan device download speed', ["ip", "hostname", "mac", "ipv6", "type"])
+    'tplink_host_info_down_speed', 'tplink lan device download speed', ["ip", "hostname","mac"])
 tplink_host_info_up_speed = Gauge(
-    'tplink_host_info_up_speed', 'tplink lan device upload speed', ["ip", "hostname", "mac", "ipv6", "type"])
+    'tplink_host_info_up_speed', 'tplink lan device upload speed', ["ip", "hostname","mac"])
+tplink_host_info_detail=None
 
 tplink_realtime_push_msg = Gauge(
     "tplink_realtime_push_msg", "pushed messages", ["msgId", "eventType", "content", "encodeType", "time", "mac", "runtime"])
@@ -123,26 +124,29 @@ def main(**config) -> None:
     # add lan hosts info
     tplink_host_info_down_speed.clear()
     tplink_host_info_up_speed.clear()
+    global tplink_host_info_detail
+    if tplink_host_info_detail:
+        tplink_host_info_detail.clear()
+    else:
+        info_template=only_str(result["hosts_info"]["online_host"][-1]["host_info_1"])
+        info_keys=list(info_template.keys())
+        tplink_host_info_detail=Gauge('tplink_host_info_detail',"detailed host info",info_keys)
     for host in result["hosts_info"]["online_host"]:
         info = list(host.values())[0]
-
-        device_types = ["wired", "wifi_2.4g", "wifi_5g"]
-        device_type = device_types[int(info["type"])+int(info["wifi_mode"])]
+        info.update({"hostname":unquote(info["hostname"])})
 
         tplink_host_info_down_speed.labels(
             ip=info["ip"],
-            hostname=unquote(info["hostname"]),
-            ipv6=info.get("ipv6", "::"),
-            mac=info["mac"],
-            type=device_type
+            hostname=info["hostname"],
+            mac=info["mac"]
         ).set(info["down_speed"])
         tplink_host_info_up_speed.labels(
             ip=info["ip"],
-            hostname=unquote(info["hostname"]),
-            ipv6=info.get("ipv6", "::"),
-            mac=info["mac"],
-            type=device_type
+            hostname=info["hostname"],
+            mac=info["mac"]
         ).set(info["up_speed"])
+
+        tplink_host_info_detail.labels(**only_str(info)).set(1)
 
 
 if __name__ == "__main__":
