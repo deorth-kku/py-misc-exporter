@@ -190,13 +190,6 @@ tplink_host_info_down_speed = Gauge(
 tplink_host_info_up_speed = Gauge(
     'tplink_host_info_up_speed', 'tplink lan device upload speed', ["ip", "hostname", "mac", "ipv6","type"])
 
-tplink_host_info_wired_count = Gauge(
-    'tplink_host_info_wired_count', 'tplink lan wired device count')
-tplink_host_info_wifi_2_4g_count = Gauge(
-    'tplink_host_info_wifi_2_4g_count', 'tplink lan 2.4g wifi device count')
-tplink_host_info_wifi_5g_count = Gauge(
-    'tplink_host_info_wifi_5g_count', 'tplink lan 5g wifi device count')
-
 conn = None
 
 
@@ -247,22 +240,12 @@ def main(**config) -> None:
     tplink_host_info_down_speed.clear()
     tplink_host_info_up_speed.clear()
 
-    wired_count = 0
-    wifi_2_4g_count = 0
-    wifi_5g_count = 0
+
     for host in result["hosts_info"]["online_host"]:
         info = list(host.values())[0]
 
-        if info["type"] == "0":
-            wired_count += 1
-            device_type="wired"
-        elif info["wifi_mode"] == "0":
-            wifi_2_4g_count += 1
-            device_type="wifi_2.4g"
-        else:
-            wifi_5g_count += 1
-            device_type="wifi_5g"
-
+        device_types=["wired","wifi_2.4g","wifi_5g"]
+        device_type=device_types[int(info["type"])+int(info["wifi_mode"])]
 
         tplink_host_info_down_speed.labels(
             ip=info["ip"],
@@ -279,9 +262,6 @@ def main(**config) -> None:
             type=device_type
         ).set(info["up_speed"])
         
-    tplink_host_info_wired_count.set(wired_count)
-    tplink_host_info_wifi_2_4g_count.set(wifi_2_4g_count)
-    tplink_host_info_wifi_5g_count.set(wifi_5g_count)
 
 
 if __name__ == "__main__":
