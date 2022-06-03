@@ -1,7 +1,8 @@
 #!/bin/python3
 import requests
 import logging
-from requests.utils import quote
+from requests.utils import quote,unquote
+
 
 class TPapi:
     @staticmethod
@@ -52,7 +53,7 @@ class TPapi:
         self.stok = stok
         self.apiurl = self.url+"stok=%s/ds" % stok
 
-    def apipost(self, data):
+    def apipost(self, data: dict):
         req = requests.post(url=self.apiurl, json=data)
         ret = req.json()
         if ret["error_code"] != 0:
@@ -68,6 +69,34 @@ class TPapi:
     def __defaultMethod(self, *args):
         data = {"network": {"name": self.methodname}, "method": "get"}
         return self.apipost(data)
+
+    def getsyslog(self, page:int=1, num_per_page:int=20):
+        data = {
+            "system": {
+                "read_logs": {
+                    "page": page,
+                    "num_per_page": num_per_page
+                }
+            },
+            "method": "do"}
+        syslog=self.apipost(data)["syslog"]
+        out=[]
+        log_levels=["","DEBUG","INFO","NOTICE","WARNING","ERROR","CRITICAL"]
+        for line in syslog:
+            name=list(line.keys())[0]    
+            index=int(name.split("_")[1])
+            text=unquote(line[name])
+            level=log_levels[int(text[1])]
+            text=text[3:]
+            out.append({
+                "name":name,
+                "text":text,
+                "level":level,
+                "index":index
+                })
+        return out
+
+        
 
     def reconnectv6(self):
         logging.info("reconnet ipv6 now")
