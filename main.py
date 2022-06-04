@@ -47,4 +47,7 @@ def main(conf,log_file,log_level):
             t.join()
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except Exception as e:
+        logging.exception(e)
