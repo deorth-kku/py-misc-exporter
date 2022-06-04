@@ -3,7 +3,7 @@ import logging
 from prometheus_client import start_http_server
 import click
 from utils import my_log_settings,JsonConfig
-import explorers
+import exporters
 import sys
 import time
 from threading import Thread
@@ -21,17 +21,17 @@ def install():
 def main(conf,log_file,log_level):
     my_log_settings(log_file,log_level)
     conf=JsonConfig(conf)
-    start_http_server(conf.get("explorer",{}).get("port",8900))
+    start_http_server(conf.get("exporter",{}).get("port",8900))
 
     threads=[]
 
     while True:
         for module_name in conf:
-            if module_name=="explorer":
+            if module_name=="exporter":
                 continue
             try:
-                explorer_main=eval("explorers.%s.main"%module_name)
-                t=Thread(target=explorer_main,kwargs=conf.get(module_name,{}))
+                exporter_main=eval("exporters.%s.main"%module_name)
+                t=Thread(target=exporter_main,kwargs=conf.get(module_name,{}))
                 t.start()
                 threads.append(t)
             except AttributeError:
@@ -39,7 +39,7 @@ def main(conf,log_file,log_level):
             except Exception as e:
                 logging.exception(e)
                 return 255
-        t=Thread(target=time.sleep,args=(conf.get("explorer",{}).get("interval",10),))
+        t=Thread(target=time.sleep,args=(conf.get("exporter",{}).get("interval",10),))
         t.start()
         threads.append(t)
 
