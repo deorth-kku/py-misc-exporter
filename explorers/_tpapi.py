@@ -1,7 +1,7 @@
 #!/bin/python3
 import requests
 import logging
-from requests.utils import quote,unquote
+from requests.utils import quote, unquote
 
 
 class TPapi:
@@ -70,7 +70,7 @@ class TPapi:
         data = {"network": {"name": self.methodname}, "method": "get"}
         return self.apipost(data)
 
-    def getsyslog(self, page:int=1, num_per_page:int=20):
+    def getsyslog(self, page: int = 1, num_per_page: int = 20):
         data = {
             "system": {
                 "read_logs": {
@@ -79,33 +79,32 @@ class TPapi:
                 }
             },
             "method": "do"}
-        syslog=self.apipost(data)["syslog"]
-        out=[]
-        log_levels=["","DEBUG","INFO","NOTICE","WARNING","ERROR","CRITICAL"]
+        syslog = self.apipost(data)["syslog"]
+        out = []
+        log_levels = ["", "DEBUG", "INFO", "NOTICE",
+                      "WARNING", "ERROR", "CRITICAL"]
         for line in syslog:
-            name=list(line.keys())[0]    
+            name = list(line.keys())[0]
 
-            text=unquote(line[name])
-            level=log_levels[int(text[1])]
-            text=text[3:]
-            text=text.split(",")
-            days_str=text[0]
-            hour_str,min_str,sec_str=text[1].split(":")
-            text=",".join(text[2:])
-            days:int=int(days_str.rstrip("days"))
-            hour:int=int(hour_str.lstrip(" "))
-            minute:int=int(min_str)
-            second:int=int(sec_str)
-            uptime=days*86400+hour*3600+minute*60+second
+            text = unquote(line[name])
+            level = log_levels[int(text[1])]
+            text = text[3:]
+            text = text.split(",")
+            days_str = text[0]
+            hour_str, min_str, sec_str = text[1].split(":")
+            text = ",".join(text[2:])
+            days: int = int(days_str.rstrip("days"))
+            hour: int = int(hour_str.lstrip(" "))
+            minute: int = int(min_str)
+            second: int = int(sec_str)
+            uptime = days*86400+hour*3600+minute*60+second
             out.append({
-                "name":name,
-                "text":text,
-                "level":level,
-                "uptime":uptime
-                })
+                "name": name,
+                "text": text,
+                "level": level,
+                "uptime": uptime
+            })
         return out
-
-        
 
     def reconnectv6(self):
         logging.info("reconnet ipv6 now")
