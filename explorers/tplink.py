@@ -63,17 +63,20 @@ def main(**config) -> None:
             ]
         },
         "hosts_info": {
-            "table": "online_host",
+            "table": "host_info",
             "name": "cap_host_num"
         },
         "system": {
             "table": "realtime_push_msg"
-        }
+        },
+        "port_manage": {
+            "table": ["dev_info"]
+        },
     }
     try:
         result = conn.apipost(data)
     except Exception as e:
-        if str(e).endswith("-40101"):
+        if str(e)=="ESYSTEM":
             data["network"]["name"].remove("wanv6_status")
             result = conn.apipost(data)
         else:
@@ -110,14 +113,17 @@ def main(**config) -> None:
 
     # add syslog
     tplink_system_logs.clear()
-    syslog = conn.getsyslog()
+    syslog = conn.getsyslog(num_per_page=150)
     global tplink_system_logs_uptime
+
     for line in syslog:
-        if line["uptime"] > tplink_system_logs_uptime or line["name"] != last_name:
+        if line["uptime"] > tplink_system_logs_uptime or line["name"] != vars().get("last_name", line["name"]):
             uptime = line["uptime"]
             tplink_system_logs.labels(**only_str(line)).set(uptime)
             tplink_system_logs_uptime = uptime
             last_name = line["name"]
+    if "last_name" in dir():
+        del last_name
 
     # add lan hosts info
     tplink_host_info_down_speed.clear()
@@ -127,11 +133,11 @@ def main(**config) -> None:
         tplink_host_info_detail.clear()
     else:
         info_template = only_str(
-            result["hosts_info"]["online_host"][-1]["host_info_1"])
+            result["hosts_info"]["host_info"][-1]["host_info_1"])
         info_keys = list(info_template.keys())
         tplink_host_info_detail = Gauge(
             'tplink_host_info_detail', "detailed host info", info_keys)
-    for host in result["hosts_info"]["online_host"]:
+    for host in result["hosts_info"]["host_info"]:
         info = list(host.values())[0]
         info.update({"hostname": unquote(info["hostname"])})
 
