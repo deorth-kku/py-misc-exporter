@@ -43,8 +43,8 @@ tplink_realtime_push_msg = Gauge(
     "tplink_realtime_push_msg", "pushed messages", ["msgId", "eventType", "content", "encodeType", "time", "mac", "runtime"])
 
 tplink_system_logs = Gauge(
-    "tplink_system_logs", "tplink system log", ["text","level"])
-tplink_system_logs_num=0
+    "tplink_system_logs", "tplink system log", ["text","level","name"])
+tplink_system_logs_uptime=0
 conn = None
 
 
@@ -111,14 +111,13 @@ def main(**config) -> None:
     # add syslog
     tplink_system_logs.clear()
     syslog=conn.getsyslog()
-    global tplink_system_logs_num
+    global tplink_system_logs_uptime
     for line in syslog:
-        if line["index"]>tplink_system_logs_num:
-            line_num=line["index"]
-            line.pop("index")
-            line.pop("name")
-            tplink_system_logs.labels(**line).set(line_num)
-            tplink_system_logs_num=line_num
+        if line["uptime"]>tplink_system_logs_uptime or line["name"]!=last_name:
+            uptime=line["uptime"]
+            tplink_system_logs.labels(**only_str(line)).set(uptime)
+            tplink_system_logs_uptime=uptime
+            last_name=line["name"]
 
 
     # add lan hosts info

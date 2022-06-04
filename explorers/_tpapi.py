@@ -84,15 +84,24 @@ class TPapi:
         log_levels=["","DEBUG","INFO","NOTICE","WARNING","ERROR","CRITICAL"]
         for line in syslog:
             name=list(line.keys())[0]    
-            index=int(name.split("_")[1])
+
             text=unquote(line[name])
             level=log_levels[int(text[1])]
             text=text[3:]
+            text=text.split(",")
+            days_str=text[0]
+            hour_str,min_str,sec_str=text[1].split(":")
+            text=",".join(text[2:])
+            days:int=int(days_str.rstrip("days"))
+            hour:int=int(hour_str.lstrip(" "))
+            minute:int=int(min_str)
+            second:int=int(sec_str)
+            uptime=days*86400+hour*3600+minute*60+second
             out.append({
                 "name":name,
                 "text":text,
                 "level":level,
-                "index":index
+                "uptime":uptime
                 })
         return out
 
