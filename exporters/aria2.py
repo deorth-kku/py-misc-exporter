@@ -17,17 +17,19 @@ def __main(**config):
     global_stat = conn.getGlobalStat()
     for task in active_stat:
         if "bittorrent" in task:
+            bittorrent="1"
             if "info" in task["bittorrent"]:
                 name=task["bittorrent"]["info"]["name"]
             else:
-                continue
+                name=task["files"][0]["path"]
             task.pop("bittorrent")
+            
         else:
+            bittorrent="0"
+            logging.debug("set task name from filename %s ,gid %s"%(task["files"][0]["path"],task["gid"]))
             name=os.path.basename(task["files"][0]["path"])
-            status_list=[uri["status"] for uri in task["files"][0]["uris"]]
-            task.update({
-                "numSeeders":status_list.count("used")
-            })
+            
+            
             
         gid=task.pop("gid")
         for arg in task:
@@ -36,13 +38,14 @@ def __main(**config):
                 metric_obj=aria2_task_metrics[metric_name]
             else:
                 logging.debug("add metric %s"%metric_name)
-                metric_obj=Gauge(metric_name,"",["gid","name"])
+                metric_obj=Gauge(metric_name,"",["gid","name","bittorrent"])
                 aria2_task_metrics.update({metric_name:metric_obj})
             try:
                 value=float(task[arg])
             except (ValueError,TypeError):
                 continue
-            metric_obj.labels(gid,name).set(value)
+            metric_obj.labels(gid,name,bittorrent).set(value)
+
     for arg in global_stat:
         metric_name="aria2_global_"+arg
         if metric_name in aria2_global_metrics:
