@@ -59,7 +59,7 @@ tplink_system_logs_uptime = 0
 conn = None
 
 
-def main(**config) -> None:
+def __main(**config) -> None:
     logging.debug("start refresh tp-link explorer")
     global conn
     url = "http://%s/" % config.get("host", "tplogin.cn")
@@ -218,6 +218,13 @@ def main(**config) -> None:
         ).set(info["up_speed"])
 
         tplink_host_info_detail.labels(**only_str(info)).set(1)
+
+def main(**config):
+    try:
+        return __main(**config)
+    except Exception as e:
+        logging.exception(e)
+        raise
 
 
 if __name__ == "__main__":

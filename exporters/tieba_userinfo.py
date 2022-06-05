@@ -27,9 +27,13 @@ tieba_userinfo_line = Info("tieba_userinfo_line",
                            "some userinfo from baidu tieba")
 
 def main(**config) -> None:
-    for id in config["ids"]:
-        info = get_userinfo(id)
-        tieba_userinfo_line.info(info)
+    try:
+        for id in config["ids"]:
+            info = get_userinfo(id)
+            tieba_userinfo_line.info(info)
+    except Exception as e:
+        logging.exception(e)
+        raise
 
 
 if __name__ == "__main__":
