@@ -1,9 +1,9 @@
 #!/bin/python3
 import sys
-if __package__=="":
-    from _tpapi import *
+from exporters._tpapi import TPapi
 
 if __name__ == "__main__":
+    
     conn = TPapi("http://tplogin.cn/", stok=open("/mnt/temp/tpapi_stok","r").read())
     data = {
         "method": "get",

@@ -98,7 +98,6 @@ def __main(**config) -> None:
             result = conn.apipost(data)
         else:
             logging.exception(e)
-            conn = None
             return
     # add route info
     tplink_port_manage_dev_info.info(
