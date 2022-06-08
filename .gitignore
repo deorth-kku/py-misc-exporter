@@ -131,3 +131,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# more personal settings
+exporters/kill_xunlei.py

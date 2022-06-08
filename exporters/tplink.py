@@ -24,47 +24,67 @@ def unquote_hostname(input: dict) -> dict:
     input.update({"hostname": unquote(input["hostname"])})
     return input
 
-
-tplink_cap_host_num = Gauge('tplink_cap_host_num', 'tplink online device num')
-tplink_cap_guest_num = Gauge(
-    'tplink_cap_guest_num', 'tplink online guest device num')
-tplink_wan_status_up_time = Gauge(
-    'tplink_wan_status_up_time', 'tplink wan uptime')
-tplink_wan_status_up_speed = Gauge(
-    'tplink_wan_status_up_speed', 'tplink wan upload speed (KB)')
-tplink_wan_status_down_speed = Gauge(
-    'tplink_wan_status_down_speed', 'tplink wan download speed (KB)')
-tplink_wan_status = Info("tplink_wan_status", "tplink full wan status")
-
-tplink_wanv6_status_up_time = Gauge(
-    'tplink_wanv6_status_up_time', 'tplink wan ipv6 uptime')
-tplink_wanv6_status = Info("tplink_wanv6_status",
-                           "tplink full wan ipv6 status")
-
-tplink_host_info_down_speed = Gauge(
-    'tplink_host_info_down_speed', 'tplink lan device download speed', ["ip", "hostname", "mac"])
-tplink_host_info_up_speed = Gauge(
-    'tplink_host_info_up_speed', 'tplink lan device upload speed', ["ip", "hostname", "mac"])
-tplink_host_info_detail = None
-
-tplink_realtime_push_msg = Gauge(
-    "tplink_realtime_push_msg", "pushed messages", ["msgId", "eventType", "content", "encodeType", "time", "mac", "runtime"])
-
-tplink_system_logs = Gauge(
-    "tplink_system_logs", "tplink system log", ["text", "level", "name"])
-
-tplink_port_manage_dev_info = Info(
-    "tplink_port_manage_dev", "tplink route device info")
-tplink_system_logs_uptime = 0
-conn = None
-
-
-def __main(**config) -> None:
-    logging.debug("start refresh tp-link explorer")
+def init(**config):
+    global tplink_cap_host_num
+    global tplink_cap_guest_num
+    global tplink_wan_status
+    global tplink_cap_guest_num
+    global tplink_cap_host_num
+    global tplink_dhcpd_dhcp_clients
+    global tplink_host_info_detail
+    global tplink_wan_status_up_time
+    global tplink_wan_status_up_speed
+    global tplink_wan_status_down_speed
+    global tplink_wanv6_status_up_time
+    global tplink_wanv6_status
+    global tplink_host_info_down_speed
+    global tplink_host_info_up_speed
+    global tplink_realtime_push_msg
+    global tplink_system_logs
+    global tplink_port_manage_dev_info
+    global tplink_system_logs_uptime
     global conn
+    
+    tplink_cap_host_num = Gauge('tplink_cap_host_num', 'tplink online device num')
+    tplink_cap_guest_num = Gauge(
+        'tplink_cap_guest_num', 'tplink online guest device num')
+    tplink_wan_status_up_time = Gauge(
+        'tplink_wan_status_up_time', 'tplink wan uptime')
+    tplink_wan_status_up_speed = Gauge(
+        'tplink_wan_status_up_speed', 'tplink wan upload speed (KB)')
+    tplink_wan_status_down_speed = Gauge(
+        'tplink_wan_status_down_speed', 'tplink wan download speed (KB)')
+    tplink_wan_status = Info("tplink_wan_status", "tplink full wan status")
+
+    tplink_wanv6_status_up_time = Gauge(
+        'tplink_wanv6_status_up_time', 'tplink wan ipv6 uptime')
+    tplink_wanv6_status = Info("tplink_wanv6_status",
+                            "tplink full wan ipv6 status")
+
+    tplink_host_info_down_speed = Gauge(
+        'tplink_host_info_down_speed', 'tplink lan device download speed', ["ip", "hostname", "mac"])
+    tplink_host_info_up_speed = Gauge(
+        'tplink_host_info_up_speed', 'tplink lan device upload speed', ["ip", "hostname", "mac"])
+    tplink_host_info_detail = None
+
+    tplink_realtime_push_msg = Gauge(
+        "tplink_realtime_push_msg", "pushed messages", ["msgId", "eventType", "content", "encodeType", "time", "mac", "runtime"])
+
+    tplink_system_logs = Gauge(
+        "tplink_system_logs", "tplink system log", ["text", "level", "name"])
+
+    tplink_port_manage_dev_info = Info(
+        "tplink_port_manage_dev", "tplink route device info")
+    tplink_system_logs_uptime = 0
+
     url = "http://%s/" % config.get("host", "tplogin.cn")
-    if not conn:
-        conn = TPapi(url, config["password"])
+    conn = TPapi(url, config["password"])
+
+def __main(*_) -> None:
+    global conn
+    logging.debug("start refresh tp-link explorer")
+    
+    
     data = {
         "method": "get",
         "network": {
@@ -218,9 +238,9 @@ def __main(**config) -> None:
 
         tplink_host_info_detail.labels(**only_str(info)).set(1)
 
-def main(**config):
+def main(**_):
     try:
-        return __main(**config)
+        return __main()
     except Exception as e:
         logging.exception(e)
         raise

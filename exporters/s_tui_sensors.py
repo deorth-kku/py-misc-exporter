@@ -7,15 +7,20 @@ from s_tui.sources.fan_source import FanSource
 import logging
 from prometheus_client import Gauge
 
-sources = [FreqSource(), TempSource(),
-                   UtilSource(),
-                   RaplPowerSource(),
-                   FanSource()]
-s_tui_metrics={}
-for source in sources:
-    source_name = source.get_source_name()
-    metric_obj=Gauge("s_tui_sensors_"+source_name,"",["device"])
-    s_tui_metrics.update({source_name:metric_obj})
+
+def init(**_):
+    global s_tui_metrics
+    global sources
+    s_tui_metrics={}
+    sources = [FreqSource(), TempSource(),
+                    UtilSource(),
+                    RaplPowerSource(),
+                    FanSource()]
+    
+    for source in sources:
+        source_name = source.get_source_name()
+        metric_obj=Gauge("s_tui_sensors_"+source_name,"",["device"])
+        s_tui_metrics.update({source_name:metric_obj})
 
 
 def __main():
@@ -29,7 +34,7 @@ def __main():
             value=float(result[device_name])
             metric_obj.labels(device_name).set(value)
 
-def main(*_):
+def main(**_):
     try:
         __main()
     except Exception as e:

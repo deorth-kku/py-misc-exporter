@@ -23,15 +23,23 @@ def main(conf,log_file,log_level):
     conf=JsonConfig(conf)
     start_http_server(conf.get("exporter",{}).get("port",8900))
 
-    threads=[]
+    for module_name in conf:
+        if module_name=="exporter":
+            continue
+        try:
+            module_init=eval("exporters.%s.init"%module_name)
+            module_init(**conf.get(module_name,{}))
+        except AttributeError:
+            logging.warning("cannot run init() in module %s, please check if module is correctly written"%module_name)
 
     while True:
+        threads=[]
         for module_name in conf:
             if module_name=="exporter":
                 continue
             try:
-                exporter_main=eval("exporters.%s.main"%module_name)
-                t=Thread(target=exporter_main,kwargs=conf.get(module_name,{}))
+                module_main=eval("exporters.%s.main"%module_name)
+                t=Thread(target=module_main,kwargs=conf.get(module_name,{}))
                 t.start()
                 threads.append(t)
             except AttributeError:

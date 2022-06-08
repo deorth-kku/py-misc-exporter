@@ -9,10 +9,12 @@ def get_monitor_data(host="127.0.0.1", port=15178, proto="http"):
     req = requests.get(url=monitor_url)
     return req.json()
 
-viewpower_metrics={}
+def init():
+    global viewpower_metrics
+    viewpower_metrics={}
 
 
-def main(**config):
+def __main(**config):
     data=get_monitor_data(host=config.get("host","127.0.0.1"),port=config.get("port",15178),proto=config.get("proto","http"))["workInfo"]
     for arg in data:
         try:
@@ -29,6 +31,12 @@ def main(**config):
             metric_obj=viewpower_metrics[metric_name]
 
         metric_obj.set(value)
+
+def main(**config):
+    try:
+        __main(**config)
+    except Exception as e:
+        logging.exception(e)
 
 
 if __name__ == "__main__":

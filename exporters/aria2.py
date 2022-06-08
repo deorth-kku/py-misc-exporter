@@ -1,18 +1,20 @@
 #!/bin/python3
 from utils import Aria2Rpc
-from prometheus_client import Gauge, Info
+from prometheus_client import Gauge
 import os
 import logging
 
-aria2_task_metrics = {}
-aria2_global_metrics = {}
-conn = None
 
-
-def __main(**config):
+def init(**config):
+    global aria2_global_metrics
+    global aria2_task_metrics
     global conn
-    if not conn:
-        conn = Aria2Rpc(**config)
+    aria2_task_metrics = {}
+    aria2_global_metrics = {}
+    conn = Aria2Rpc(**config)
+
+
+def __main(*_):
 
     sel_para = ["gid", "totalLength", "completedLength", "uploadSpeed",
                 "downloadSpeed", "connections", "numSeeders", "files", "bittorrent"]
@@ -71,9 +73,9 @@ def __main(**config):
         metric_obj.set(value)
 
 
-def main(**config):
+def main(**_):
     try:
-        return __main(**config)
+        return __main()
     except Exception as e:
         logging.exception(e)
         raise

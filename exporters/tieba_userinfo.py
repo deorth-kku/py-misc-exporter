@@ -4,6 +4,10 @@ import re
 import logging
 from prometheus_client import Info
 
+def init(**_):
+    global tieba_userinfo_line
+    tieba_userinfo_line = Info("tieba_userinfo_line",
+                           "some userinfo from baidu tieba")
 
 def get_userinfo(id: str) -> dict:
     url = "https://tieba.baidu.com/home/main?id=%s" % id
@@ -23,8 +27,6 @@ def get_userinfo(id: str) -> dict:
     return out
 
 
-tieba_userinfo_line = Info("tieba_userinfo_line",
-                           "some userinfo from baidu tieba")
 
 def main(**config) -> None:
     try:
