@@ -1,14 +1,14 @@
 #!/bin/python3
-from s_tui.sources.util_source import UtilSource
-from s_tui.sources.freq_source import FreqSource
-from s_tui.sources.temp_source import TempSource
-from s_tui.sources.rapl_power_source import RaplPowerSource
-from s_tui.sources.fan_source import FanSource
 import logging
 from prometheus_client import Gauge
 
 
 def init(**_):
+    from s_tui.sources.util_source import UtilSource
+    from s_tui.sources.freq_source import FreqSource
+    from s_tui.sources.temp_source import TempSource
+    from s_tui.sources.rapl_power_source import RaplPowerSource
+    from s_tui.sources.fan_source import FanSource
     global s_tui_metrics
     global sources
     s_tui_metrics={}
