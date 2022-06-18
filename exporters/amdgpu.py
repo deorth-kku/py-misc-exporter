@@ -58,6 +58,7 @@ def init(**_):
     gpu_num = pyamdgpuinfo.detect_gpus()
     gpus = [gpu_info(gpu) for gpu in range(gpu_num)]
     for gpu_info_obj in gpus:
+        gpu_info_obj.start_utilisation_polling()
         result = gpu_info_obj.get_metric_dict()
         for metric_name in result:
             if metric_name in amdgpu_metrics:
@@ -66,6 +67,15 @@ def init(**_):
             amdgpu_metrics.update({
                 metric_name: metric_obj
             })
+        amdgpu_detailed_info=Gauge("amdgpu_detailed_info","value is vram total",["gpu_id","name","path","pci_slot"])
+        amdgpu_detailed_info.labels(gpu_info_obj.gpu_id,gpu_info_obj.name,gpu_info_obj.path,gpu_info_obj.pci_slot).set(gpu_info_obj.memory_info["vram_size"])
+
+        amdgpu_gtt_size=Gauge("amdgpu_gtt_size","",["gpu_id"])
+        amdgpu_gtt_size.labels(gpu_info_obj.gpu_id).set(gpu_info_obj.memory_info["gtt_size"])
+
+        amdgpu_vram_cpu_accessible_size=Gauge("amdgpu_vram_cpu_accessible_size","",["gpu_id"])
+        amdgpu_vram_cpu_accessible_size.labels(gpu_info_obj.gpu_id).set(gpu_info_obj.memory_info["vram_cpu_accessible_size"])
+        
 
 
 def __main():
