@@ -15,8 +15,7 @@ def wait_until_next(interval: int, jitter: float = 0) -> None:
     if jitter < interval/2:
         time.sleep(jitter)
     now = time.time()
-    next = now-now % interval+interval
-    wait = max(next-now-jitter, 0)
+    wait = max(interval-(now % interval) - jitter, 0)
     time.sleep(wait)
 
 
@@ -133,7 +132,7 @@ def main(conf, log_file, log_level):
         for t in threads:
             t.join()
         logging.debug("finished refresh metrics")
-        jitter = ((time.time()-start_time)*1.2+jitter)/2
+        jitter = (time.time()-start_time+jitter)*0.55+0.02
 
 
 if __name__ == "__main__":
