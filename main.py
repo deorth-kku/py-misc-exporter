@@ -10,6 +10,16 @@ import time
 from threading import Thread
 
 
+def wait_until_next(interval: int, jitter: float = 0) -> None:
+    jitter = abs(jitter)
+    if jitter < interval/2:
+        time.sleep(jitter)
+    now = time.time()
+    next = now-now % interval+interval
+    wait = max(next-now-jitter, 0)
+    time.sleep(wait)
+
+
 def install_systemd_service(ctx, _, value):
     if not value or ctx.resilient_parsing:
         return
@@ -44,32 +54,32 @@ WantedBy=multi-user.target
 
     if os.path.exists(service_filename):
         logging.error(
-            "not overwriting exist service file %s, remove it first if you have to"%service_filename)
+            "not overwriting exist service file %s, remove it first if you have to" % service_filename)
     else:
         with open(service_filename, "w") as f:
             f.write(service_file_text)
-        logging.info("created service file %s"%service_filename)
-        logging.warning("you need to run \"systemctl daemon-reload\" manually (for now)")
+        logging.info("created service file %s" % service_filename)
+        logging.warning(
+            "you need to run \"systemctl daemon-reload\" manually (for now)")
 
-    
     if os.path.exists(env_filename):
         logging.error(
-            "not overwriting exist env file %s, remove it first if you have to"%env_filename)
+            "not overwriting exist env file %s, remove it first if you have to" % env_filename)
     else:
         with open(env_filename, "w") as f:
             f.write(env_file_text)
-        logging.info("created env file %s"%env_filename)
+        logging.info("created env file %s" % env_filename)
 
     if os.path.exists(config_filename):
         logging.error(
-            "not overwriting exist env file %s, remove it first if you have to"%config_filename)
+            "not overwriting exist env file %s, remove it first if you have to" % config_filename)
     else:
-        os.makedirs(os.path.dirname(config_filename),exist_ok=True)
-        f=JsonConfig(config_filename)
+        os.makedirs(os.path.dirname(config_filename), exist_ok=True)
+        f = JsonConfig(config_filename)
         f.dumpconfig({
-            "exporter":{}
+            "exporter": {}
         })
-        logging.info("created config file %s"%config_filename)
+        logging.info("created config file %s" % config_filename)
 
     ctx.exit()
 
@@ -94,9 +104,13 @@ def main(conf, log_file, log_level):
         except AttributeError:
             logging.warning(
                 "cannot run init() in module %s, please check if module is correctly written" % module_name)
-
+    interval = conf.get("exporter", {}).get("interval", 10)
+    jitter = interval*0.48
     while True:
         threads = []
+        wait_until_next(interval, jitter)
+        start_time = time.time()
+        logging.debug("started refresh metrics")
         for module_name in conf:
             if module_name == "exporter":
                 continue
@@ -111,14 +125,15 @@ def main(conf, log_file, log_level):
                     "cannot run main() in module %s, please check if module is correctly written" % module_name)
             except Exception as e:
                 logging.exception(e)
-                return 255
-        t = Thread(target=time.sleep, args=(
-            conf.get("exporter", {}).get("interval", 10),))
-        t.start()
-        threads.append(t)
+                if logging.root.isEnabledFor(logging.DEBUG):
+                    raise
+                else:
+                    return 255
 
         for t in threads:
             t.join()
+        logging.debug("finished refresh metrics")
+        jitter = ((time.time()-start_time)*1.2+jitter)/2
 
 
 if __name__ == "__main__":
