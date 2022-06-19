@@ -1,0 +1,2257 @@
+{
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                },
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "target": {
+                    "limit": 100,
+                    "matchAny": false,
+                    "tags": [],
+                    "type": "dashboard"
+                },
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 14,
+    "iteration": 1655208950425,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "id": 27,
+            "panels": [],
+            "title": "Status",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "6H_MEvrnk"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        }
+                    },
+                    "mappings": []
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 9,
+                "w": 3,
+                "x": 0,
+                "y": 1
+            },
+            "hideTimeOverride": true,
+            "id": 21,
+            "interval": "5s",
+            "maxDataPoints": 1,
+            "options": {
+                "displayLabels": [],
+                "legend": {
+                    "displayMode": "table",
+                    "placement": "bottom",
+                    "values": [
+                        "value"
+                    ]
+                },
+                "pieType": "pie",
+                "reduceOptions": {
+                    "calcs": [],
+                    "fields": "",
+                    "values": false
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "count(tplink_host_info_detail{type=\"1\",wifi_mode=\"0\",blocked=\"0\"})",
+                    "instant": true,
+                    "legendFormat": "2.4g devices",
+                    "range": false,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "count(tplink_host_info_detail{type=\"1\",wifi_mode=\"1\",blocked=\"0\"})",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "5g devices",
+                    "range": false,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "count(tplink_host_info_detail{type=\"0\",wifi_mode=\"0\",blocked=\"0\"})",
+                    "hide": false,
+                    "instant": true,
+                    "legendFormat": "wired devices",
+                    "range": false,
+                    "refId": "C"
+                }
+            ],
+            "timeFrom": "5s",
+            "title": "device types",
+            "type": "piechart"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "6H_MEvrnk"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [
+                        {
+                            "options": {
+                                "from": 1,
+                                "result": {
+                                    "index": 0,
+                                    "text": "Connected"
+                                },
+                                "to": 999999999
+                            },
+                            "type": "range"
+                        },
+                        {
+                            "options": {
+                                "from": 0,
+                                "result": {
+                                    "index": 1,
+                                    "text": "Disconnected"
+                                },
+                                "to": 0
+                            },
+                            "type": "range"
+                        },
+                        {
+                            "options": {
+                                "match": "null",
+                                "result": {
+                                    "index": 2,
+                                    "text": "Disconnected"
+                                }
+                            },
+                            "type": "special"
+                        }
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "#d44a3a",
+                                "value": null
+                            },
+                            {
+                                "color": "#ffc3001c",
+                                "value": 0
+                            },
+                            {
+                                "color": "#299c46",
+                                "value": 1
+                            }
+                        ]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 5,
+                "w": 9,
+                "x": 3,
+                "y": 1
+            },
+            "id": 40,
+            "links": [],
+            "maxDataPoints": 1,
+            "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [],
+                    "fields": "",
+                    "values": false
+                },
+                "text": {},
+                "textMode": "value_and_name"
+            },
+            "pluginVersion": "8.5.5",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "tplink_port_manage_phy_info",
+                    "instant": true,
+                    "legendFormat": "port{{phy}}: {{role}}",
+                    "range": false,
+                    "refId": "A"
+                }
+            ],
+            "title": "wired ports status",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "6H_MEvrnk"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "custom": {
+                        "align": "auto",
+                        "displayMode": "auto",
+                        "inspect": false
+                    },
+                    "mappings": [
+                        {
+                            "options": {
+                                "0": {
+                                    "index": 0,
+                                    "text": "wired"
+                                },
+                                "1": {
+                                    "index": 1,
+                                    "text": "wifi 2.4g"
+                                },
+                                "2": {
+                                    "index": 2,
+                                    "text": "wifi 5g"
+                                },
+                                "::": {
+                                    "index": 3,
+                                    "text": "None"
+                                }
+                            },
+                            "type": "value"
+                        }
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "ip"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.width",
+                                "value": 139
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "ipv6"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.width",
+                                "value": 298
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "mac"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.width",
+                                "value": 138
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "type"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.width",
+                                "value": 107
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "tt"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.width",
+                                "value": 80
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 17,
+                "w": 12,
+                "x": 12,
+                "y": 1
+            },
+            "hideTimeOverride": true,
+            "id": 19,
+            "interval": "5s",
+            "maxDataPoints": 1,
+            "options": {
+                "footer": {
+                    "enablePagination": true,
+                    "fields": "",
+                    "reducer": [
+                        "sum"
+                    ],
+                    "show": false
+                },
+                "showHeader": true,
+                "sortBy": [
+                    {
+                        "desc": false,
+                        "displayName": "mac"
+                    }
+                ]
+            },
+            "pluginVersion": "8.5.5",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "tplink_host_info_detail{blocked=\"0\"}",
+                    "format": "table",
+                    "instant": true,
+                    "legendFormat": "{{mac}}",
+                    "range": false,
+                    "refId": "A"
+                }
+            ],
+            "timeFrom": "1s",
+            "title": "lan devices online",
+            "transformations": [
+                {
+                    "id": "convertFieldType",
+                    "options": {
+                        "conversions": [
+                            {
+                                "destinationType": "number",
+                                "targetField": "type"
+                            },
+                            {
+                                "destinationType": "number",
+                                "targetField": "wifi_mode"
+                            }
+                        ],
+                        "fields": {}
+                    }
+                },
+                {
+                    "id": "calculateField",
+                    "options": {
+                        "alias": "tt",
+                        "mode": "reduceRow",
+                        "reduce": {
+                            "include": [
+                                "type",
+                                "wifi_mode"
+                            ],
+                            "reducer": "sum"
+                        }
+                    }
+                },
+                {
+                    "id": "convertFieldType",
+                    "options": {
+                        "conversions": [
+                            {
+                                "destinationType": "string",
+                                "targetField": "tt"
+                            }
+                        ],
+                        "fields": {}
+                    }
+                },
+                {
+                    "id": "organize",
+                    "options": {
+                        "excludeByName": {
+                            "Time": true,
+                            "Value": true,
+                            "__name__": true,
+                            "blocked": true,
+                            "down_limit": true,
+                            "down_speed": true,
+                            "hostname": false,
+                            "instance": true,
+                            "is_cur_host": true,
+                            "is_mesh": true,
+                            "job": true,
+                            "parent_mac": true,
+                            "type": true,
+                            "up_limit": true,
+                            "up_speed": true,
+                            "wifi_mode": true
+                        },
+                        "indexByName": {},
+                        "renameByName": {
+                            "tt": "type"
+                        }
+                    }
+                }
+            ],
+            "type": "table"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "6H_MEvrnk"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 60
+                            }
+                        ]
+                    },
+                    "unit": "s"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 3,
+                "y": 6
+            },
+            "hideTimeOverride": true,
+            "id": 12,
+            "interval": "5s",
+            "maxDataPoints": 1,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "8.5.5",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "tplink_wan_status_up_time",
+                    "instant": true,
+                    "range": false,
+                    "refId": "A"
+                }
+            ],
+            "timeFrom": "5s",
+            "title": "wan uptime",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "6H_MEvrnk"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 60
+                            }
+                        ]
+                    },
+                    "unit": "dtdurations"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 5,
+                "x": 7,
+                "y": 6
+            },
+            "hideTimeOverride": true,
+            "id": 14,
+            "interval": "5s",
+            "maxDataPoints": 1,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            },
+            "pluginVersion": "8.5.5",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "tplink_wanv6_status_up_time",
+                    "instant": true,
+                    "range": false,
+                    "refId": "A"
+                }
+            ],
+            "timeFrom": "5s",
+            "title": "wanv6 uptime",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "6H_MEvrnk"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "custom": {
+                        "align": "left",
+                        "displayMode": "color-text",
+                        "filterable": false,
+                        "inspect": false,
+                        "minWidth": 20
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "green",
+                                "value": 1
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Field"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.width",
+                                "value": 83
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 4,
+                "x": 0,
+                "y": 10
+            },
+            "hideTimeOverride": true,
+            "id": 36,
+            "interval": "5s",
+            "maxDataPoints": 1,
+            "options": {
+                "footer": {
+                    "fields": "",
+                    "reducer": [
+                        "sum"
+                    ],
+                    "show": false
+                },
+                "showHeader": false,
+                "sortBy": []
+            },
+            "pluginVersion": "8.5.5",
+            "repeatDirection": "h",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "tplink_port_manage_dev_info",
+                    "format": "table",
+                    "instant": true,
+                    "interval": "",
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "A"
+                }
+            ],
+            "timeFrom": "1s",
+            "title": "hardware info",
+            "transformations": [
+                {
+                    "id": "groupBy",
+                    "options": {
+                        "fields": {
+                            "cap": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "gateway": {
+                                "aggregations": [
+                                    "lastNotNull"
+                                ],
+                                "operation": "groupby"
+                            },
+                            "ipaddr": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "mac": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "name": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "netmask": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "online": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "phy_num": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "power_pos": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "pri_dns": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "proto": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "snd_dns": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "svlan": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            }
+                        }
+                    }
+                },
+                {
+                    "id": "reduce",
+                    "options": {
+                        "reducers": [
+                            "lastNotNull"
+                        ]
+                    }
+                }
+            ],
+            "type": "table"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "6H_MEvrnk"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "custom": {
+                        "align": "auto",
+                        "displayMode": "color-text",
+                        "filterable": false,
+                        "inspect": false,
+                        "minWidth": 20
+                    },
+                    "mappings": [
+                        {
+                            "options": {
+                                "0.0.0.0": {
+                                    "color": "red",
+                                    "index": 0,
+                                    "text": "None"
+                                }
+                            },
+                            "type": "value"
+                        }
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Field"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.width",
+                                "value": 83
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 3,
+                "x": 4,
+                "y": 10
+            },
+            "hideTimeOverride": true,
+            "id": 16,
+            "interval": "5s",
+            "maxDataPoints": 1,
+            "options": {
+                "footer": {
+                    "fields": "",
+                    "reducer": [
+                        "sum"
+                    ],
+                    "show": false
+                },
+                "showHeader": false,
+                "sortBy": []
+            },
+            "pluginVersion": "8.5.5",
+            "repeat": "Filters",
+            "repeatDirection": "h",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "tplink_wan_status_info{}",
+                    "format": "table",
+                    "instant": true,
+                    "interval": "",
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "A"
+                }
+            ],
+            "timeFrom": "1s",
+            "title": "ipv4 wan status",
+            "transformations": [
+                {
+                    "id": "groupBy",
+                    "options": {
+                        "fields": {
+                            "gateway": {
+                                "aggregations": [
+                                    "lastNotNull"
+                                ],
+                                "operation": "groupby"
+                            },
+                            "ipaddr": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "netmask": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "pri_dns": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "proto": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "snd_dns": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            }
+                        }
+                    }
+                },
+                {
+                    "id": "reduce",
+                    "options": {
+                        "reducers": [
+                            "lastNotNull"
+                        ]
+                    }
+                }
+            ],
+            "type": "table"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "6H_MEvrnk"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "custom": {
+                        "align": "auto",
+                        "displayMode": "color-text",
+                        "filterable": false,
+                        "inspect": false,
+                        "minWidth": 20
+                    },
+                    "mappings": [
+                        {
+                            "options": {
+                                "::": {
+                                    "color": "red",
+                                    "index": 0,
+                                    "text": "None"
+                                }
+                            },
+                            "type": "value"
+                        }
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Field"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.width",
+                                "value": 79
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 5,
+                "x": 7,
+                "y": 10
+            },
+            "hideTimeOverride": true,
+            "id": 17,
+            "interval": "5s",
+            "maxDataPoints": 1,
+            "options": {
+                "footer": {
+                    "enablePagination": false,
+                    "fields": "",
+                    "reducer": [
+                        "sum"
+                    ],
+                    "show": false
+                },
+                "showHeader": false,
+                "sortBy": []
+            },
+            "pluginVersion": "8.5.5",
+            "repeatDirection": "h",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "tplink_wanv6_status_info{}",
+                    "format": "table",
+                    "instant": true,
+                    "interval": "",
+                    "legendFormat": "__auto",
+                    "range": false,
+                    "refId": "A"
+                }
+            ],
+            "timeFrom": "1s",
+            "timeShift": "0s",
+            "title": "ipv6 wan status",
+            "transformations": [
+                {
+                    "id": "groupBy",
+                    "options": {
+                        "fields": {
+                            "Time": {
+                                "aggregations": [
+                                    "lastNotNull"
+                                ]
+                            },
+                            "gateway": {
+                                "aggregations": [
+                                    "lastNotNull"
+                                ],
+                                "operation": "groupby"
+                            },
+                            "ip6addr": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "ip6gw": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "ipaddr": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "netmask": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "prefix": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "prefixlen": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "pri_dns": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "proto": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            },
+                            "snd_dns": {
+                                "aggregations": [],
+                                "operation": "groupby"
+                            }
+                        }
+                    }
+                },
+                {
+                    "id": "reduce",
+                    "options": {
+                        "labelsToFields": true,
+                        "reducers": [
+                            "last"
+                        ]
+                    }
+                }
+            ],
+            "type": "table"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 18
+            },
+            "id": 29,
+            "panels": [],
+            "title": "Monitors",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "6H_MEvrnk"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 9,
+                        "gradientMode": "opacity",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "binBps"
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byRegexp",
+                            "options": "/Upload.*/"
+                        },
+                        "properties": [
+                            {
+                                "id": "custom.transform",
+                                "value": "negative-Y"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "gridPos": {
+                "h": 12,
+                "w": 12,
+                "x": 0,
+                "y": 19
+            },
+            "id": 4,
+            "interval": "5s",
+            "options": {
+                "legend": {
+                    "calcs": [
+                        "max",
+                        "min",
+                        "mean",
+                        "last"
+                    ],
+                    "displayMode": "table",
+                    "placement": "bottom",
+                    "sortBy": "Last",
+                    "sortDesc": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "desc"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum by (ip,hostname,mac) (tplink_host_info_down_speed{ip!~\"0.0.0.0|169.254.*\"}) ",
+                    "legendFormat": "Download: {{hostname}}({{ip}})",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum by (ip,hostname,mac) (tplink_host_info_up_speed{ip!~\"0.0.0.0|169.254.*\"})",
+                    "hide": false,
+                    "legendFormat": "Upload: {{hostname}}({{ip}})",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "expr": "tplink_wan_status_up_speed*1024",
+                    "hide": false,
+                    "legendFormat": "Upload: total",
+                    "range": true,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "expr": "tplink_wan_status_down_speed*1024",
+                    "hide": false,
+                    "legendFormat": "Download: total",
+                    "range": true,
+                    "refId": "D"
+                }
+            ],
+            "title": "traffic monitor",
+            "transformations": [],
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "6H_MEvrnk"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 4,
+                        "gradientMode": "opacity",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "none"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 12,
+                "w": 12,
+                "x": 12,
+                "y": 19
+            },
+            "id": 2,
+            "interval": "5s",
+            "options": {
+                "legend": {
+                    "calcs": [
+                        "min",
+                        "max",
+                        "last"
+                    ],
+                    "displayMode": "table",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "asc"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "expr": "tplink_cap_host_num",
+                    "legendFormat": "host devices",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "expr": "tplink_cap_guest_num",
+                    "hide": false,
+                    "legendFormat": "guest devices",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "expr": "count(tplink_host_info_detail{wifi_mode=\"1\",blocked=\"0\"})",
+                    "hide": false,
+                    "legendFormat": "wifi 5g devices",
+                    "range": true,
+                    "refId": "C"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "expr": "count(tplink_host_info_detail{type=\"0\",blocked=\"0\"})",
+                    "hide": false,
+                    "legendFormat": "wired devices",
+                    "range": true,
+                    "refId": "D"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "expr": "count(tplink_host_info_detail{type=\"1\",wifi_mode=\"0\",blocked=\"0\"})",
+                    "hide": false,
+                    "legendFormat": "2.4g devices",
+                    "range": true,
+                    "refId": "E"
+                }
+            ],
+            "title": "device nums",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "6H_MEvrnk"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 5,
+                        "gradientMode": "opacity",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 11,
+                "w": 12,
+                "x": 0,
+                "y": 31
+            },
+            "id": 33,
+            "options": {
+                "legend": {
+                    "calcs": [
+                        "min",
+                        "max",
+                        "last"
+                    ],
+                    "displayMode": "table",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "desc"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "expr": "count (tplink_upnpd_upnp_lease) by (client,desc)",
+                    "legendFormat": "{{client}}: {{desc}}",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "upnp lease",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "6H_MEvrnk"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "dtdhms"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 11,
+                "w": 12,
+                "x": 12,
+                "y": 31
+            },
+            "id": 35,
+            "options": {
+                "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom"
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "asc"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "editorMode": "code",
+                    "exemplar": false,
+                    "expr": "tplink_dhcpd_dhcp_clients{}<86400",
+                    "format": "time_series",
+                    "instant": false,
+                    "legendFormat": "{{hostname}}({{ip}})",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "dhcp lease",
+            "transformations": [],
+            "type": "timeseries"
+        },
+        {
+            "collapsed": true,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 42
+            },
+            "id": 44,
+            "panels": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "thresholds"
+                            },
+                            "custom": {
+                                "align": "auto",
+                                "displayMode": "auto",
+                                "inspect": false
+                            },
+                            "mappings": [
+                                {
+                                    "options": {
+                                        "17": {
+                                            "index": 1,
+                                            "text": "UDP"
+                                        },
+                                        "6": {
+                                            "index": 0,
+                                            "text": "TCP"
+                                        }
+                                    },
+                                    "type": "value"
+                                }
+                            ],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green"
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": [
+                            {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "clientv6"
+                                },
+                                "properties": [
+                                    {
+                                        "id": "custom.width",
+                                        "value": 197
+                                    }
+                                ]
+                            },
+                            {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "client"
+                                },
+                                "properties": [
+                                    {
+                                        "id": "custom.width",
+                                        "value": 166
+                                    }
+                                ]
+                            },
+                            {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "ext_port"
+                                },
+                                "properties": [
+                                    {
+                                        "id": "custom.width",
+                                        "value": 103
+                                    }
+                                ]
+                            },
+                            {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "inner_port"
+                                },
+                                "properties": [
+                                    {
+                                        "id": "custom.width",
+                                        "value": 102
+                                    }
+                                ]
+                            },
+                            {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "proto"
+                                },
+                                "properties": [
+                                    {
+                                        "id": "custom.width",
+                                        "value": 69
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "gridPos": {
+                        "h": 12,
+                        "w": 12,
+                        "x": 0,
+                        "y": 43
+                    },
+                    "hideTimeOverride": true,
+                    "id": 42,
+                    "interval": "5s",
+                    "maxDataPoints": 1,
+                    "options": {
+                        "footer": {
+                            "enablePagination": true,
+                            "fields": "",
+                            "reducer": [
+                                "sum"
+                            ],
+                            "show": false
+                        },
+                        "showHeader": true,
+                        "sortBy": []
+                    },
+                    "pluginVersion": "8.5.5",
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "6H_MEvrnk"
+                            },
+                            "editorMode": "code",
+                            "exemplar": false,
+                            "expr": "tplink_upnpd_upnp_lease",
+                            "format": "table",
+                            "instant": true,
+                            "range": false,
+                            "refId": "A"
+                        }
+                    ],
+                    "timeFrom": "5s",
+                    "title": "current upnp lease",
+                    "transformations": [
+                        {
+                            "id": "organize",
+                            "options": {
+                                "excludeByName": {
+                                    "Time": true,
+                                    "Value": true,
+                                    "__name__": true,
+                                    "instance": true,
+                                    "job": true
+                                },
+                                "indexByName": {},
+                                "renameByName": {}
+                            }
+                        }
+                    ],
+                    "type": "table"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "description": "",
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "thresholds"
+                            },
+                            "custom": {
+                                "align": "left",
+                                "displayMode": "auto",
+                                "inspect": false
+                            },
+                            "mappings": [
+                                {
+                                    "options": {
+                                        "from": 172801,
+                                        "result": {
+                                            "index": 0,
+                                            "text": "permanent"
+                                        },
+                                        "to": 9999999999999
+                                    },
+                                    "type": "range"
+                                }
+                            ],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green"
+                                    }
+                                ]
+                            },
+                            "unit": "dtdhms"
+                        },
+                        "overrides": []
+                    },
+                    "gridPos": {
+                        "h": 12,
+                        "w": 12,
+                        "x": 12,
+                        "y": 43
+                    },
+                    "hideTimeOverride": true,
+                    "id": 46,
+                    "interval": "5s",
+                    "maxDataPoints": 1,
+                    "options": {
+                        "footer": {
+                            "enablePagination": true,
+                            "fields": "",
+                            "reducer": [
+                                "sum"
+                            ],
+                            "show": false
+                        },
+                        "showHeader": true,
+                        "sortBy": [
+                            {
+                                "desc": false,
+                                "displayName": "expires"
+                            }
+                        ]
+                    },
+                    "pluginVersion": "8.5.5",
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "6H_MEvrnk"
+                            },
+                            "editorMode": "code",
+                            "exemplar": false,
+                            "expr": "tplink_dhcpd_dhcp_clients",
+                            "format": "table",
+                            "instant": true,
+                            "range": false,
+                            "refId": "A"
+                        }
+                    ],
+                    "timeFrom": "5s",
+                    "title": "current dhcp lease",
+                    "transformations": [
+                        {
+                            "id": "organize",
+                            "options": {
+                                "excludeByName": {
+                                    "Time": true,
+                                    "__name__": true,
+                                    "instance": true,
+                                    "job": true
+                                },
+                                "indexByName": {},
+                                "renameByName": {
+                                    "Value": "expires"
+                                }
+                            }
+                        }
+                    ],
+                    "type": "table"
+                }
+            ],
+            "title": "lease detail info",
+            "type": "row"
+        },
+        {
+            "collapsed": true,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 43
+            },
+            "id": 31,
+            "panels": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "thresholds"
+                            },
+                            "custom": {
+                                "align": "left",
+                                "displayMode": "auto",
+                                "inspect": false
+                            },
+                            "mappings": [],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green",
+                                        "value": null
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            },
+                            "unit": "dtdhms"
+                        },
+                        "overrides": [
+                            {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "level"
+                                },
+                                "properties": [
+                                    {
+                                        "id": "custom.width",
+                                        "value": 86
+                                    }
+                                ]
+                            },
+                            {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "uptime"
+                                },
+                                "properties": [
+                                    {
+                                        "id": "custom.width",
+                                        "value": 106
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "gridPos": {
+                        "h": 18,
+                        "w": 12,
+                        "x": 0,
+                        "y": 44
+                    },
+                    "hideTimeOverride": false,
+                    "id": 23,
+                    "interval": "5s",
+                    "maxDataPoints": 9999999999,
+                    "options": {
+                        "footer": {
+                            "enablePagination": true,
+                            "fields": "",
+                            "reducer": [
+                                "sum"
+                            ],
+                            "show": false
+                        },
+                        "showHeader": true,
+                        "sortBy": [
+                            {
+                                "desc": true,
+                                "displayName": "uptime"
+                            }
+                        ]
+                    },
+                    "pluginVersion": "8.5.5",
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "6H_MEvrnk"
+                            },
+                            "editorMode": "code",
+                            "exemplar": false,
+                            "expr": "avg(tplink_system_logs) by (level,text,name)",
+                            "format": "table",
+                            "instant": false,
+                            "range": true,
+                            "refId": "A"
+                        }
+                    ],
+                    "timeFrom": "12h",
+                    "title": "syslog",
+                    "transformations": [
+                        {
+                            "id": "organize",
+                            "options": {
+                                "excludeByName": {
+                                    "Time": true,
+                                    "Value": false,
+                                    "__name__": true,
+                                    "instance": true,
+                                    "job": true,
+                                    "name": true
+                                },
+                                "indexByName": {
+                                    "Time": 0,
+                                    "Value": 1,
+                                    "__name__": 2,
+                                    "instance": 3,
+                                    "job": 4,
+                                    "level": 5,
+                                    "text": 6
+                                },
+                                "renameByName": {
+                                    "Value": "uptime"
+                                }
+                            }
+                        }
+                    ],
+                    "type": "table"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "6H_MEvrnk"
+                    },
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "thresholds"
+                            },
+                            "custom": {
+                                "align": "auto",
+                                "displayMode": "auto",
+                                "inspect": false
+                            },
+                            "mappings": [],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green",
+                                        "value": null
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": [
+                            {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "eventType"
+                                },
+                                "properties": [
+                                    {
+                                        "id": "custom.width",
+                                        "value": 110
+                                    }
+                                ]
+                            },
+                            {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "mac"
+                                },
+                                "properties": [
+                                    {
+                                        "id": "custom.width",
+                                        "value": 152
+                                    }
+                                ]
+                            },
+                            {
+                                "matcher": {
+                                    "id": "byName",
+                                    "options": "time"
+                                },
+                                "properties": [
+                                    {
+                                        "id": "custom.width",
+                                        "value": 181
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "gridPos": {
+                        "h": 18,
+                        "w": 12,
+                        "x": 12,
+                        "y": 44
+                    },
+                    "hideTimeOverride": false,
+                    "id": 25,
+                    "interval": "5s",
+                    "maxDataPoints": 65535,
+                    "options": {
+                        "footer": {
+                            "enablePagination": true,
+                            "fields": "",
+                            "reducer": [
+                                "sum"
+                            ],
+                            "show": false
+                        },
+                        "frameIndex": 2,
+                        "showHeader": true,
+                        "sortBy": [
+                            {
+                                "desc": true,
+                                "displayName": "time"
+                            }
+                        ]
+                    },
+                    "pluginVersion": "8.5.5",
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "6H_MEvrnk"
+                            },
+                            "editorMode": "code",
+                            "expr": "tplink_realtime_push_msg",
+                            "format": "table",
+                            "range": true,
+                            "refId": "A"
+                        }
+                    ],
+                    "timeFrom": "12h",
+                    "title": "pushed msgs",
+                    "transformations": [
+                        {
+                            "id": "convertFieldType",
+                            "options": {
+                                "conversions": [
+                                    {
+                                        "destinationType": "number",
+                                        "targetField": "time"
+                                    }
+                                ],
+                                "fields": {}
+                            }
+                        },
+                        {
+                            "id": "calculateField",
+                            "options": {
+                                "alias": "datetime",
+                                "binary": {
+                                    "left": "time",
+                                    "operator": "*",
+                                    "reducer": "sum",
+                                    "right": "1000"
+                                },
+                                "mode": "binary",
+                                "reduce": {
+                                    "reducer": "sum"
+                                },
+                                "replaceFields": false
+                            }
+                        },
+                        {
+                            "id": "convertFieldType",
+                            "options": {
+                                "conversions": [
+                                    {
+                                        "destinationType": "time",
+                                        "targetField": "datetime"
+                                    }
+                                ],
+                                "fields": {}
+                            }
+                        },
+                        {
+                            "id": "organize",
+                            "options": {
+                                "excludeByName": {
+                                    "Time": true,
+                                    "Value": true,
+                                    "__name__": true,
+                                    "encodeType": true,
+                                    "eventType": false,
+                                    "instance": true,
+                                    "job": true,
+                                    "msgId": true,
+                                    "runtime": true,
+                                    "time": true
+                                },
+                                "indexByName": {
+                                    "Time": 1,
+                                    "Value": 11,
+                                    "__name__": 2,
+                                    "content": 12,
+                                    "datetime": 0,
+                                    "encodeType": 3,
+                                    "eventType": 4,
+                                    "instance": 5,
+                                    "job": 6,
+                                    "mac": 7,
+                                    "msgId": 8,
+                                    "runtime": 9,
+                                    "time": 10
+                                },
+                                "renameByName": {
+                                    "content": "text",
+                                    "datetime": "time"
+                                }
+                            }
+                        }
+                    ],
+                    "type": "table"
+                }
+            ],
+            "title": "logs&msgs",
+            "type": "row"
+        }
+    ],
+    "refresh": false,
+    "schemaVersion": 36,
+    "style": "dark",
+    "tags": [
+        "network"
+    ],
+    "templating": {
+        "list": [
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "6H_MEvrnk"
+                },
+                "filters": [],
+                "hide": 0,
+                "name": "Filters",
+                "skipUrlSync": false,
+                "type": "adhoc"
+            }
+        ]
+    },
+    "time": {
+        "from": "now-3h",
+        "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "tplink",
+    "uid": "iOvwKf9nz",
+    "version": 114,
+    "weekStart": ""
+}
