@@ -261,10 +261,6 @@
                             {
                                 "color": "green",
                                 "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
                             }
                         ]
                     },
@@ -311,7 +307,6 @@
                 }
             ],
             "timeFrom": "30d",
-            "timeShift": "1d",
             "title": "eletricity used per days",
             "type": "timeseries"
         },
@@ -670,6 +665,6 @@
     "timezone": "browser",
     "title": "viewpower",
     "uid": "T1DMcSrnk",
-    "version": 61,
+    "version": 64,
     "weekStart": ""
 }

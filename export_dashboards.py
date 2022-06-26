@@ -17,7 +17,7 @@ class Grafana:
         self.session = requests.Session()
         self.session.headers.update(headers)
 
-    def get_dashboard(self, uid: str):
+    def get_dashboard(self, uid: str) -> dict:
         url = Url.join(self.site, "api/dashboards/uid/", uid)
         req = self.session.get(url)
         return req.json()

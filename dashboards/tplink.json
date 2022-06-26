@@ -25,7 +25,7 @@
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
     "id": 14,
-    "iteration": 1655208950425,
+    "iteration": 1656137468986,
     "links": [],
     "liveNow": false,
     "panels": [
@@ -229,7 +229,7 @@
                 "text": {},
                 "textMode": "value_and_name"
             },
-            "pluginVersion": "8.5.5",
+            "pluginVersion": "9.0.1",
             "targets": [
                 {
                     "datasource": {
@@ -390,7 +390,7 @@
                     }
                 ]
             },
-            "pluginVersion": "8.5.5",
+            "pluginVersion": "9.0.1",
             "targets": [
                 {
                     "datasource": {
@@ -535,7 +535,7 @@
                 },
                 "textMode": "auto"
             },
-            "pluginVersion": "8.5.5",
+            "pluginVersion": "9.0.1",
             "targets": [
                 {
                     "datasource": {
@@ -607,7 +607,7 @@
                 },
                 "textMode": "auto"
             },
-            "pluginVersion": "8.5.5",
+            "pluginVersion": "9.0.1",
             "targets": [
                 {
                     "datasource": {
@@ -694,7 +694,7 @@
                 "showHeader": false,
                 "sortBy": []
             },
-            "pluginVersion": "8.5.5",
+            "pluginVersion": "9.0.1",
             "repeatDirection": "h",
             "targets": [
                 {
@@ -867,7 +867,7 @@
                 "showHeader": false,
                 "sortBy": []
             },
-            "pluginVersion": "8.5.5",
+            "pluginVersion": "9.0.1",
             "repeat": "Filters",
             "repeatDirection": "h",
             "targets": [
@@ -1015,7 +1015,7 @@
                 "showHeader": false,
                 "sortBy": []
             },
-            "pluginVersion": "8.5.5",
+            "pluginVersion": "9.0.1",
             "repeatDirection": "h",
             "targets": [
                 {
@@ -1454,8 +1454,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1548,8 +1547,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1912,8 +1910,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -2044,8 +2041,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -2230,19 +2226,7 @@
         "network"
     ],
     "templating": {
-        "list": [
-            {
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "6H_MEvrnk"
-                },
-                "filters": [],
-                "hide": 0,
-                "name": "Filters",
-                "skipUrlSync": false,
-                "type": "adhoc"
-            }
-        ]
+        "list": []
     },
     "time": {
         "from": "now-3h",
@@ -2252,6 +2236,6 @@
     "timezone": "",
     "title": "tplink",
     "uid": "iOvwKf9nz",
-    "version": 114,
+    "version": 116,
     "weekStart": ""
 }
