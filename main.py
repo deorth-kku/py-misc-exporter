@@ -86,9 +86,9 @@ WantedBy=multi-user.target
 @click.command(context_settings=dict(auto_envvar_prefix="PME"))
 @click.option('--install', is_flag=True, callback=install_systemd_service,
               expose_value=False, is_eager=True, help='install systemd service file to system')
-@click.option('-c', "--conf", type=click.Path(exists=True), help='using specific config file', default="config.json", show_envvar=True)
+@click.option('-c', "--conf", type=click.Path(exists=True), help='using specific json config file', default="config.json", show_envvar=True, show_default=True)
 @click.option('-l', "--log-file", type=click.Path(), help='using specific log file', default=None, show_envvar=True)
-@click.option("--log-level", type=click.Choice(['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'], case_sensitive=False), help='using specific log level', default="DEBUG", show_envvar=True)
+@click.option("--log-level", type=click.Choice(['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'], case_sensitive=False), help='using specific log level', default="INFO", show_envvar=True, show_default=True)
 def main(conf, log_file, log_level):
     my_log_settings(log_file, log_level)
     conf = JsonConfig(conf)
